@@ -30,7 +30,7 @@ public class FilterOutputStreamDemo {
         try {
             fis=new FileInputStream(path);
             reporta();
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.err.println("Can't read file");
         }
         fis.close();
