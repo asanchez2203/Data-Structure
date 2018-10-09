@@ -182,6 +182,5 @@ public class Prueba {
         Prueba p = new Prueba();
         p.meta(); 
         p.navegabilidad();     
-    }
-    
+    }  
 }
