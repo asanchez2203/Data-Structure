@@ -90,6 +90,11 @@ public class CapArchRep {
         ds = new DataOutputStream(fw);
     }
 
+    void cierraSal() throws IOException {
+        ds.close();
+        fw.close();
+    }
+
     void inicio() {
         System.out.println("Para ilustrar la interpretación");
         System.out.println("del formato de datos leidos del teclado");
@@ -108,7 +113,7 @@ public class CapArchRep {
 
     public String bitPattern(short value) {
         short BIT1_MASK = 1;
-        final char[] bits = new char[8];
+        final char[] bits = new char[16];
         for (short i = 7; i >= 0; i--) {
             bits[i] = (value & BIT1_MASK) == 1 ? '1' : '0';
             value >>>= 1;
@@ -181,7 +186,7 @@ public class CapArchRep {
         do {
             System.out.print("Dame un numero de 32 bits en Binario: ");
             entra = t.nextLine();
-        } while (entra.length()!=32 &&!isBin(entra));
+        } while (entra.length() != 32 || !isBin(entra));
         m = (char) toInt(entra.substring(0, 15));
         n = (char) toInt(entra.substring(16, 32));
         try {
@@ -195,14 +200,14 @@ public class CapArchRep {
     void leeCharEsArch() { //leer 2 char
         System.out.print("Deme un caracter: ");
         aux = t.nextLine();
-        if (aux.length()> 1) {
+        if (aux.length() > 1) {
             m = aux.charAt(0);
             n = aux.charAt(1);
-        }else{
-            n=aux.charAt(0);
+        } else {
+            n = aux.charAt(0);
             System.out.print("Deme otro caracter: ");
-            aux=t.nextLine();
-            n=aux.charAt(0);
+            aux = t.nextLine();
+            n = aux.charAt(0);
         }
         try {
             ds.writeChar(m);
@@ -211,19 +216,19 @@ public class CapArchRep {
             System.err.println("Excpetion While Save Characters");
         }
     }
-    
-    void leeShortEsChArch(){ //lee 2 short
-        short n,m;
-        do{
+
+    void leeShortEsChArch() { //lee 2 short
+        short n, m;
+        do {
             System.out.println("Dame un numero corto: ");
-            aux=t.nextLine();
-        }while(!isNum(aux));
-        n=Short.parseShort(aux);
-        do{
+            aux = t.nextLine();
+        } while (!isNum(aux));
+        n = Short.parseShort(aux);
+        do {
             System.out.println("Dame otro numero corto: ");
-            aux=t.nextLine();
-        }while(!isNum(aux));
-        m=Short.parseShort(aux);
+            aux = t.nextLine();
+        } while (!isNum(aux));
+        m = Short.parseShort(aux);
         try {
             ds.writeChar(m);
             ds.writeChar(n);
@@ -231,68 +236,73 @@ public class CapArchRep {
             System.err.println("Excpetion While Save Short Numbers");
         }
     }
-    
-    void leeEntEsChArch() throws IOException{
+
+    void leeEntEsChArch() throws IOException {
         int num;
-        do{
+        do {
             System.out.print("Deme un numero: ");
-            aux=t.nextLine();
-        }while(!isNum(aux));
-        num=Integer.parseInt(aux);
+            aux = t.nextLine();
+        } while (!isNum(aux));
+        num = Integer.parseInt(aux);
         ds.writeInt(num);
     }
-    
-    void leeFloatEsChArch() throws IOException{
+
+    void leeFloatEsChArch() throws IOException {
         Float num;
-        do{
+        do {
             System.out.print("Deme un numero flotante: ");
-            aux=t.nextLine();
-        }while(!isNum(aux));
-        num=Float.parseFloat(aux);
+            aux = t.nextLine();
+        } while (!isNum(aux));
+        num = Float.parseFloat(aux);
         ds.writeFloat(num);
     }
-    
-    void abreArchivo() throws IOException{
-        f=new FileInputStream("Data.mbd");
-        dis=new DataInputStream((f));
+
+    void abreArchivo() throws IOException {
+        f = new FileInputStream("Data.mbd");
+        dis = new DataInputStream((f));
     }
-    
-    void r3f(short n){
+
+    void r3f(short n) {
         System.out.println("En el archivo hay numero con formato binario ");
         System.out.println(bitPattern(n));
-        System.out.printf("el mismo como char es %c\n",n);
-        System.out.printf("el mismo como numero corto es %d\n",n);
-        System.out.printf("con formato decimal %d\n",n);
+        System.out.printf("el mismo como char es %c\n", n);
+        System.out.printf("el mismo como numero corto es %d\n", n);
+        System.out.printf("con formato decimal %d\n", n);
     }
-    
-    void reporta() throws IOException{ //All formats
-        short num,o;
+
+    void reporta() throws IOException { //All formats
+        short num, o;
         int n;
         float f;
-        
+
         ds.close();
         abreArchivo();
-        num=dis.readShort();
+        num = dis.readShort();
         r3f(num);
-        o=dis.readShort();
+        o = dis.readShort();
         r3f(o);
         dis.close();
         abreArchivo();
-        n=dis.readInt();
-        System.out.println("El numero entero es: "+n);
+        n = dis.readInt();
+        System.out.println("El numero entero es: " + n);
         dis.close();
-        
+
         abreArchivo();
-        f=dis.readFloat();
-        System.out.println("El numero flotante es: "+f);
+        f = dis.readFloat();
+        System.out.println("El numero flotante es: " + f);
         dis.close();
     }
-    
+
     public static void main(String[] args) throws IOException {
-        CapArchRep car=new CapArchRep();
+        CapArchRep car = new CapArchRep();
+        int opcion;
         car.inicio();
-        car.abreSal();
-        car.captura();
-        car.reporta();
+
+        while ((opcion = car.menu()) != 5) {
+            car.abreSal();
+            car.captura();
+            car.reporta();
+        }
+        car.cierraSal();
     }
 }
