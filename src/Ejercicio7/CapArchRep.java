@@ -181,7 +181,7 @@ public class CapArchRep {
         do {
             System.out.print("Dame un numero de 32 bits en Binario: ");
             entra = t.nextLine();
-        } while (!isBin(entra));
+        } while (entra.length()!=32 &&!isBin(entra));
         m = (char) toInt(entra.substring(0, 15));
         n = (char) toInt(entra.substring(16, 32));
         try {
