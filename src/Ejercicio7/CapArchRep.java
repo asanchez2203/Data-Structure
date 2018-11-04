@@ -76,7 +76,6 @@ import java.util.Scanner;
 import java.io.*;
 
 public class CapArchRep {
-
     Scanner t = new Scanner(System.in);
     FileOutputStream fw;
     DataOutputStream ds;//flujo de salida
@@ -114,6 +113,7 @@ public class CapArchRep {
     public String bitPattern(short value) {
         short BIT1_MASK = 1;
         final char[] bits = new char[16];
+        
         for (short i = 7; i >= 0; i--) {
             bits[i] = (value & BIT1_MASK) == 1 ? '1' : '0';
             value >>>= 1;
@@ -122,11 +122,9 @@ public class CapArchRep {
     }
 
     boolean isBin(String cad) {
-        for (int i = 0; i < cad.length(); i++) {
-            if (cad.charAt(i) != '0' && cad.charAt(i) != '1') {
+        for (int i = 0; i < cad.length(); i++) 
+            if (cad.charAt(i) != '0' && cad.charAt(i) != '1') 
                 return false;
-            }
-        }
         return true;
     }
 
@@ -150,34 +148,21 @@ public class CapArchRep {
 
     void captura() throws IOException {
         int op;
-        if ((op = menu()) != 6) {
+        if ((op = menu()) != 6) 
             switch (op) {
-                case 1:
-                    leeBinEsChArch();
-                    break;
-                case 2:
-                    leeCharEsArch();
-                    break;
-                case 3:
-                    leeShortEsChArch();
-                    break;
-                case 4:
-                    leeEntEsChArch();
-                    break;
-                case 5:
-                    leeFloatEsChArch();
-                    break;
-                default:
-                    System.out.println("Opciones válidas 1-5");
+                case 1: leeBinEsChArch(); break;
+                case 2: leeCharEsArch(); break;
+                case 3: leeShortEsChArch(); break;
+                case 4: leeEntEsChArch(); break;
+                case 5: leeFloatEsChArch(); break;
+                default: System.out.println("Opciones válidas 1-5");
             }
-        }
     }
 
     int toInt(String s) {
         int n = 0;
-        for (int i = s.length() - 1, j = 0; i >= 0; i--, j++) {
+        for (int i = s.length() - 1, j = 0; i >= 0; i--, j++) 
             n += (s.charAt(i) - '0') * Math.pow(2, j);
-        }
         return n;
     }
 
@@ -286,7 +271,6 @@ public class CapArchRep {
         n = dis.readInt();
         System.out.println("El numero entero es: " + n);
         dis.close();
-
         abreArchivo();
         f = dis.readFloat();
         System.out.println("El numero flotante es: " + f);

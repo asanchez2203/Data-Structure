@@ -34,6 +34,7 @@ public class Prueba {
         out("Escriba item a agregar: ");
         return s.nextLine();
     }
+    
     Conjunto readConjunto(Conjunto c){
         String seguir="";
         do {
@@ -44,10 +45,12 @@ public class Prueba {
         while(seguir.equalsIgnoreCase("s"));
         return c;
     }
+    
     void mostrar(Conjunto c){
         for(Object o:c.getObjects())
             if(o!=null) out(o.toString()+"\n");
     }
+    
     boolean isNum(String s){
         try {
             Integer.parseInt(s);
@@ -77,6 +80,7 @@ public class Prueba {
             out("1.- Ingresa un nuevo conjunto a la lista\n");
             out("2.- Operar entre conjuntos\n");
             out("3.- Salir\n");
+            out("Deme su elección: ");
             do opcion=s.nextLine(); while(!isNum(opcion));
             op=Integer.parseInt(opcion);
             switch(op){

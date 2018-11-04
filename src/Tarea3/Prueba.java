@@ -22,11 +22,18 @@ public class Prueba {
         out("Analizar las clases BufferedWriter y BufferedReader\n");
         out("Utilizando flujos de entrada y salida en forma de canal\n");
         out("aplicandolas a un problema, en este caso, un diario secreto\n");
+        
+        out("El programa debe ofrecer al usuario las siguientes opciones \n");
+        out("1.- Escribir un nuevo archivo \n");
+        out("2.- Escribir en un archivo ya existente\n");
+        out("3.- Leer lo que haya escrito en una archivo \n");
+        out("El texto que ingrese el usuario se debe guardar encriptado\n");
     }
 
     void navegabilidad() throws IOException {
         String aux, d = "", t = "", r;
         int op;    
+        
         do {
             out("\n¿Qué deseas hacer?\n");
             do {
@@ -75,11 +82,11 @@ public class Prueba {
         do{
             out("Ingresa el mes: ");
             m = leer.nextLine();
-        }while(!isMonth(d));
+        }while(!isMonth(m));
         do{
             out("Ingresa el año: ");
             y = leer.nextLine();
-        }while(!isNum(d));
+        }while(!isNum(y));
         return date = d + m + y;
     }  
 
@@ -117,6 +124,7 @@ public class Prueba {
         openInFile(s);
         int i;
         String res = "";  
+        
         while ((i = br.read()) != -1) {
             c = (char) (i-20);
             res+=c;
@@ -166,6 +174,7 @@ public class Prueba {
     boolean isMonth(String s){
         try{
             int n;
+            
             n=Integer.parseInt(s);
             if(n>0&&n<=12) return true;
             else {
