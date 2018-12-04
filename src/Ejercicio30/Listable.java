@@ -1,3 +1,5 @@
+package Ejercicio30;
+
 interface Listable {
     public boolean estaVacia();
     public void vaciar();

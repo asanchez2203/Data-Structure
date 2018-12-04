@@ -7,17 +7,16 @@ public class Stack implements Stackable{
 
     @Override
     public void push(Object o) {
-        if(base==null)
-            base=new Node(o);
+        if(base == null)
+            base = new Node(o);
         else{
             Node aux = base;
             while(aux!=null)
-                aux=aux.getNext();
-            if(aux!=null){
+                if(aux.getNext() == null) break;
+                else aux = aux.getNext();
             Node nuevo = new Node(o);
             nuevo.next = aux.getNext();
             aux.next = nuevo;
-            }
         }
     }
 
@@ -26,7 +25,8 @@ public class Stack implements Stackable{
         if(!isEmpty()){
             Node aux = base;
             while(aux!=null)
-                aux=aux.getNext();
+                if(aux.getNext() == null) break;
+                else aux = aux.getNext();
             return aux;
         }
         else return null;   
