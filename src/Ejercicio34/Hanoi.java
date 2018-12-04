@@ -1,29 +1,31 @@
 package Ejercicio34;
 
-public class Hanoi {
-    private Stack [] palo;             // Arreglo de palos
-    private final int nDiscos;        // Cantidad de discos
+import java.util.Scanner;
 
-    public Hanoi () { 
-	this(3);
+public class Hanoi {
+    Stack [] palo;             
+    int nDiscos;        
+    Scanner leer = new Scanner(System.in);
+    
+    void meta(){
+        System.out.println("Problema de aplicacion de Pilas(Stack)");
+        System.out.println("Utilizando las torres de Hanoi");
     }
 
-    public Hanoi (int n) {
-	System.out.println("Torres de Hanoi");
-	nDiscos = n;
+    int numeroDiscos(){
+        System.out.print("Ingresa Numero de Discos: ");
+        nDiscos = leer.nextInt();
+        return nDiscos;
+    }
 
-	palo = new Stack[4];  // Crea los tres postes
+    void resultados (int n) {
+	palo = new Stack[4]; 
 	for (int i = 1; i < 4; i++)
 	    palo[i] = new Stack();
-
-			// coloca los discos en una pila de mayor a menor
-	for (int i = nDiscos; i > 0; i--)
+	for (int i = n; i > 0; i--)
 	    palo[1].push(i);
-
 	System.out.println("Las torres inicialmente tienen ");
 	pinta();
-
-  			//resuelve le problema
 	solucion(nDiscos, 1, 2, 3);
     }
 
@@ -63,8 +65,21 @@ public class Hanoi {
 	    solucion(n-1, p3, p2, p1);
 	}
     }
+    
+    public void navegabilidad(){
+        String op;
+        
+        do{
+            resultados(numeroDiscos());
+            System.out.print("Quieres intentar de nuevo?[s/n]: ");
+            op = leer.next();
+        }while(op.equalsIgnoreCase("s"));
+    }
 
     public static void main (String [] pps) {
-	new Hanoi(4);
+        Hanoi h = new Hanoi();
+        
+        h.meta();
+        h.navegabilidad();
     }
 }

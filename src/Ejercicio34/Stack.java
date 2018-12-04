@@ -15,7 +15,8 @@ public class Stack implements Stackable{
         if(!isEmpty()){
             Node aux = base;
             while(aux!=null)
-                aux=aux.getNext();
+                if(aux.getNext() == null) break;
+                else aux = aux.getNext();
             return aux;
         }
         else return null;   
@@ -49,7 +50,8 @@ public class Stack implements Stackable{
         if(!isEmpty()){
             Node aux = base;
             while(aux != null && !aux.getInfo().equals(o))
-                aux = aux.getNext();
+                if(aux.getNext() == null) break;
+                else aux = aux.getNext();
             return aux == null;
         }
         else return true;
