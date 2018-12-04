@@ -7,17 +7,7 @@ public class Stack implements Stackable{
 
     @Override
     public void push(Object o) {
-        if(base == null)
-            base = new Node(o);
-        else{
-            Node aux = base;
-            while(aux!=null)
-                if(aux.getNext() == null) break;
-                else aux = aux.getNext();
-            Node nuevo = new Node(o);
-            nuevo.next = aux.getNext();
-            aux.next = nuevo;
-        }
+        base = new Node(o, base);
     }
 
     @Override
@@ -25,8 +15,7 @@ public class Stack implements Stackable{
         if(!isEmpty()){
             Node aux = base;
             while(aux!=null)
-                if(aux.getNext() == null) break;
-                else aux = aux.getNext();
+                aux=aux.getNext();
             return aux;
         }
         else return null;   
@@ -34,14 +23,12 @@ public class Stack implements Stackable{
 
     @Override
     public Object pop() {
-            if(base.getNext() == null)
-                base = null;
-            else{
-                Node aux = peek();
-                anterior = behind(aux);
-                anterior.next = null; 
-            }
-            return anterior;
+        if (isEmpty())
+        return null;
+
+        Object dato = base.getInfo();
+        base = base.getNext();
+        return dato;
     }
 
     @Override
@@ -112,7 +99,7 @@ public class Stack implements Stackable{
     }
   
     private class MiIterador implements java.util.Iterator {
-	private Node posicion = peek();
+	private Node posicion = base;
 
 	public boolean hasNext() { return posicion != null;}
 
