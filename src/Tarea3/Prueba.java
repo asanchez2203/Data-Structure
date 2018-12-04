@@ -30,7 +30,7 @@ public class Prueba {
         out("El texto que ingrese el usuario se debe guardar encriptado\n");
     }
 
-    void navegabilidad() throws IOException {
+    void navegabilidad() {
         String aux, d = "", t = "", r;
         int op;    
         
@@ -90,9 +90,13 @@ public class Prueba {
         return date = d + m + y;
     }  
 
-    void openOutFile(String fecha) throws IOException {
-        fw = new FileWriter(path + fecha + ".diary",true);
-        bw = new BufferedWriter(fw);
+    void openOutFile(String fecha)  {
+        try {
+            fw = new FileWriter(path + fecha + ".diary",true);
+            bw = new BufferedWriter(fw);
+        } catch (Exception e) {
+            out("Archivo no encontrado");
+        }
     }
     
     void openInFile(String s) {
@@ -104,7 +108,7 @@ public class Prueba {
         }
     }
 
-    void write(String d, String t) throws IOException {
+    void write(String d, String t)  {
         try {
             openOutFile(d);
             for (int i = 0; i < t.length(); i++) {
@@ -112,18 +116,18 @@ public class Prueba {
                 bw.write(b+20);
             }
             bw.flush();
-        } catch (IOException ex) {
-            err("Can't Write Into The File: " + ex.getMessage());
-        } finally {
             fw.close();
             bw.close();
+        } catch (IOException ex) {
+            err("Can't Write Into The File: " + ex.getMessage());
         }
     }
 
-    void read(String s) throws IOException {
-        openInFile(s);
+    void read(String s) {
+        try {
+            openInFile(s);
         int i;
-        String res = "";  
+        String res = " ";  
         
         while ((i = br.read()) != -1) {
             c = (char) (i-20);
@@ -132,6 +136,9 @@ public class Prueba {
         br.close();
         r.close();
         out("\n" + res);
+        } catch (IOException e) {
+            out("Archivo no encontrado\n");
+        }
     }
 
     public String fecha(){
@@ -187,7 +194,7 @@ public class Prueba {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Prueba p = new Prueba();
         p.meta(); 
         p.navegabilidad();     
