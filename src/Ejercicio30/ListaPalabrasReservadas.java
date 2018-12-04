@@ -97,7 +97,7 @@ public class ListaPalabrasReservadas {
     
     void navegabilidad() throws IOException{
         do{
-           palabrasReservadas(escogerLenguaje());
+           palabrasReservadas(escogerLenguaje()-1);
            leerRutaArchivo();
            ComparaPalabras();
            switch(escogerSalida()){
@@ -127,7 +127,7 @@ public class ListaPalabrasReservadas {
             out("Su elección: ");
             opcion=sc.nextLine();
             if(isNum(opcion)) op=Integer.parseInt(opcion);
-        }while(op<0 && op>5);
+        }while(!(op>=1 && op<=4));
         return op;
     }
     
@@ -141,7 +141,7 @@ public class ListaPalabrasReservadas {
             out("Su elección: ");
             opc=sc.nextLine();
             if(isNum(opc)) op=Integer.parseInt(opc);
-        }while(op<0&&op>3);
+        }while(!(op>0&&op<3));
         return op;
     }
     
