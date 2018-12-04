@@ -9,7 +9,6 @@ public class ListaPalabrasReservadas {
     String[] palabras;
     String[] lenguajes={"Java.txt","C#.txt","c++.txt","Python.txt"};
     int[] size={50,76,73,31};
-    int opcion;
     String filepath,seguir,opc;
     FileReader r;
     BufferedReader br;
@@ -65,7 +64,7 @@ public class ListaPalabrasReservadas {
         }
     }
     
-    void imprimeResultados(){ lisId.imprimir();}
+    void imprimeResultados() throws IOException{ lisId.imprimir();}
     
     void openInFile(String s) {
         try {
@@ -89,40 +88,64 @@ public class ListaPalabrasReservadas {
     
     boolean isNum(String s){
         try { 
-            int opcion;
-            opcion=Integer.parseInt(s);
-            if(opcion<1&&opcion>4){
-                err("Opcion inválida");
-                return false;
-            }
+            Integer.parseInt(s);
             return true;
         } catch (NumberFormatException e) {
             return false;
         }
     }
     
-    void navegabilidad(){
+    void navegabilidad() throws IOException{
         do{
-            out("Escoja su lenguaje para comparar su archivo");
-            out("1.- JAVA");
-            out("2.- C#");
-            out("3.- C++");
-            out("4.- PYTHON");
-            out("Su elección: ");
-            do opc=sc.nextLine(); while(!isNum(opc));
-            opcion=Integer.parseInt(opc);
-            palabrasReservadas(opcion-1);
-            
-            leerRutaArchivo();
-            ComparaPalabras();
-            imprimeResultados();
-            
-            out("Desea hacerlo de nuevo? s/n");
-            seguir=sc.nextLine();
+           palabrasReservadas(escogerLenguaje());
+           leerRutaArchivo();
+           ComparaPalabras();
+           switch(escogerSalida()){
+               case 1: imprimeResultados(); break;
+               case 2: out("Nombre de archivo: ");
+                       guardarEnArchivo(sc.nextLine());
+                        break;
+           }
+           out("¿Desea intentarlo de nuevo? s/n");
+           seguir=sc.nextLine();
         }while(seguir.equalsIgnoreCase("s"));
     }
     
-    public static void main(String[] args) {
+    void guardarEnArchivo(String s) throws IOException{
+        lisId.guardarEnArchivo(s);
+    }
+    
+    int escogerLenguaje(){
+        String opcion;
+        int op=0;
+        
+        out("1.- JAVA");
+        out("2.- C#");
+        out("3.- C++");
+        out("4.- Python");
+        do{
+            out("Su elección: ");
+            opcion=sc.nextLine();
+            if(isNum(opcion)) op=Integer.parseInt(opcion);
+        }while(op<0 && op>5);
+        return op;
+    }
+    
+    int escogerSalida(){
+        String opc;
+        int op=0;
+        
+        out("1.- Ver en consola");
+        out("2.- Guardar en un archivo");
+        do{
+            out("Su elección: ");
+            opc=sc.nextLine();
+            if(isNum(opc)) op=Integer.parseInt(opc);
+        }while(op<0&&op>3);
+        return op;
+    }
+    
+    public static void main(String[] args) throws IOException {
         ListaPalabrasReservadas ls=new ListaPalabrasReservadas();
         ls.meta();
         ls.navegabilidad();

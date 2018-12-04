@@ -1,5 +1,8 @@
 package Ejercicio30;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Iterator;
 
 class ListaDeIds {
@@ -31,18 +34,31 @@ class ListaDeIds {
         }
     }
 
-    public void imprimir() {
-        for (Iterator it = ids.iterador(); it.hasNext();) {
-            IdyLista idLista = (IdyLista) it.next();
-            System.out.print(idLista.obtenerNombre() + ": ");
-            Lista lista = idLista.obtenerLista();
-            for (Iterator ilista = lista.iterador(); ilista.hasNext();) {
-                System.out.print(ilista.next() + ", ");
+    public void imprimir() throws IOException {
+            for (Iterator it = ids.iterador(); it.hasNext();) {
+                IdyLista idLista = (IdyLista) it.next();
+                System.out.print(idLista.obtenerNombre() + ": ");
+                Lista lista = idLista.obtenerLista();
+                for (Iterator ilista = lista.iterador(); ilista.hasNext();)
+                    System.out.print(ilista.next() + ", ");                 
+                System.out.println();
             }
-            System.out.println();
-        }
     }
 
+    public void guardarEnArchivo(String s) throws IOException{
+         BufferedWriter bf=new BufferedWriter(new FileWriter(s+".txt"));
+            for (Iterator it = ids.iterador(); it.hasNext();) {
+                IdyLista idLista = (IdyLista) it.next();
+                bf.write(idLista.obtenerNombre() + ": ");
+                Lista lista = idLista.obtenerLista();
+                for (Iterator ilista = lista.iterador(); ilista.hasNext();){
+                    bf.write(ilista.next() + ", ");
+                }
+                bf.newLine();
+            }
+            bf.flush();
+            bf.close();
+    }
     private class ComparadorNyL implements java.util.Comparator {
 
         @Override
